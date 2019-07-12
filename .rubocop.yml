@@ -1,0 +1,45 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.4
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 10
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Lint/InheritException:
+  EnforcedStyle: standard_error
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - class_scope
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Metrics/ParameterLists:
+  Max: 10
+
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - _
+    - id

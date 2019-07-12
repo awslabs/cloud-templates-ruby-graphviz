@@ -1,0 +1,94 @@
+<%#-*- coding: UTF-8 -*-%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".cluster, .node").click(function(e) {
+		if (e.ctrlKey) {
+			return;
+		}
+
+		e.preventDefault();
+
+        var prefix = $(this).attr("id");
+
+        $(".edge").not(`[id^='${prefix}@']`).removeClass("edge-showed").addClass("edge-hidden");
+        $(".cluster, .node").not(`[id^='${prefix}']`).removeClass("fade-back").addClass("fade-away");
+
+		$(`.edge[id^='${prefix}@']`)
+			.addClass("edge-showed")
+			.each(function(idx) {
+				var destination = $(this).attr("id").split("@")[1];
+				$(`.node[id='${destination}']`).removeClass("fade-away").addClass("fade-back");
+			});
+
+        $(".cluster, .node").filter(`.fade-away[id^='${prefix}']`).removeClass("fade-away").addClass("fade-back");
+    });
+});
+</script>
+
+<style>
+path {
+    cursor: pointer;
+}
+
+.selected {
+    stroke: yellow;
+    stroke-width: 8;
+    stroke-linejoin: round;;
+}
+
+polygon {
+    cursor: pointer;
+}
+
+.row {
+    fill: lightcoral;
+    stroke: coral;
+    stroke-linejoin: round;
+}
+
+.fade-away {
+    transition: all .3s  ease-in-out; /* Animation */
+    opacity: 0.3;
+    z-index: -20;
+    transform-origin: center center;
+    transform: scale(0.99);
+}
+
+.fade-back {
+    transition: all .1s  ease-in-out; /* Animation */
+    opacity: 1;
+    z-index: 20;
+    transform-origin: center center;
+    transform: scale(1);
+}
+
+.edge-hidden {
+    transition: all .3s  ease-in-out; /* Animation */
+    z-index: -20;
+    opacity: 0;
+}
+
+.edge-showed {
+    transition: all .1s  ease-in-out; /* Animation */
+    z-index: 20;
+    opacity: 1;
+}
+
+.edge-showed * {
+    stroke: black;
+}
+
+.edge-showed polygon {
+	fill: black;
+}
+</style>
+</head>
+<body>
+    <%= image %>
+</body>
+</html>
